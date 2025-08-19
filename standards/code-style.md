@@ -22,6 +22,7 @@ ELSE:
 - **Methods and Variables**: Use snake_case (e.g., `user_profile`, `calculate_total`)
 - **Classes and Modules**: Use PascalCase (e.g., `UserProfile`, `PaymentProcessor`)
 - **Constants**: Use UPPER_SNAKE_CASE (e.g., `MAX_RETRY_COUNT`)
+- Use descriptive variable names that explain their purpose
 
 ### String Formatting
 - Use single quotes for strings: `'Hello World'`
@@ -35,6 +36,30 @@ ELSE:
 - Never remove existing comments unless removing the associated code
 - Update comments when modifying code to maintain accuracy
 - Keep comments concise and relevant
+- Add section comments for clarity in longer files
+
+### Code Structure
+- Write self-documenting code that explains its purpose
+- Use small functions with clear responsibilities
+- Follow existing project patterns and conventions
+</conditional-block>
+
+<conditional-block task-condition="python" context-check="python-style">
+IF current task involves writing or updating Python:
+  IF python-style.md already in context:
+    SKIP: Re-reading this file
+    NOTE: "Using Python style guide already in context"
+  ELSE:
+    <context_fetcher_strategy>
+      IF current agent is Claude Code AND context-fetcher agent exists:
+        USE: @agent:context-fetcher
+        REQUEST: "Get Python style rules from code-style/python-style.md"
+        PROCESS: Returned style rules
+      ELSE:
+        READ: @~/.agent-os/standards/code-style/python-style.md
+    </context_fetcher_strategy>
+ELSE:
+  SKIP: Python style guide not relevant to current task
 </conditional-block>
 
 <conditional-block task-condition="html-css-tailwind" context-check="html-css-style">
@@ -51,8 +76,8 @@ IF current task involves writing or updating HTML, CSS, or TailwindCSS:
         PROCESS: Returned style rules
       ELSE:
         READ the following style guides (only if not already in context):
-        - @.agent-os/standards/code-style/html-style.md (if not in context)
-        - @.agent-os/standards/code-style/css-style.md (if not in context)
+        - @~/.agent-os/standards/code-style/html-style.md (if not in context)
+        - @~/.agent-os/standards/code-style/css-style.md (if not in context)
     </context_fetcher_strategy>
 ELSE:
   SKIP: HTML/CSS style guides not relevant to current task
@@ -70,7 +95,7 @@ IF current task involves writing or updating JavaScript:
         REQUEST: "Get JavaScript style rules from code-style/javascript-style.md"
         PROCESS: Returned style rules
       ELSE:
-        READ: @.agent-os/standards/code-style/javascript-style.md
+        READ: @~/.agent-os/standards/code-style/javascript-style.md
     </context_fetcher_strategy>
 ELSE:
   SKIP: JavaScript style guide not relevant to current task
